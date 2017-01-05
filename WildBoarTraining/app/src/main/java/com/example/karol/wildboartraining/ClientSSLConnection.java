@@ -50,7 +50,7 @@ public class ClientSSLConnection {
         TAG = "TAG";
         keystorepass = "key12345".toCharArray();
         keypassword = "12345key".toCharArray();
-        ip_address = "89.70.222.60";
+        ip_address = "185.157.80.59";
     }
 
     public void runConnection(View v) {
