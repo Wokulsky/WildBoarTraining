@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WildBoarTraining</string>
+    <string name="title_lable">Menu</string>
+    <string name="createPlan_lable">Stwórz plan</string>
+    <string name="showPlan_lable">Pokaż plan</string>
+    <string name="option_lable">Opcje</string>
+    <string name="exit_lable">Wyjscie</string>
+</resources>
