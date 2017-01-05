@@ -6,4 +6,6 @@
     <string name="showPlan_lable">Pokaż plan</string>
     <string name="option_lable">Opcje</string>
     <string name="exit_lable">Wyjscie</string>
+    <string name="connect_server_lable">Połączenie z serverem</string>
+    <string name="connect_button_lable">Połącz</string>
 </resources>
