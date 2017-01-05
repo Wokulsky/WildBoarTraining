@@ -11,7 +11,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
         View ImageView = findViewById(R.id.imageView);
         ImageView.setOnClickListener(this);
     }
