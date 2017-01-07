@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import static java.lang.Thread.sleep;
 
@@ -16,15 +17,12 @@ public class SplashActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        //final Animation shake = AnimationUtils.loadAnimation(this, R.anim.shake);
-        View boarImage = findViewById(R.id.boar_logo);
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 try {
-                    sleep(2000);
-                   // boarImage.startAnimation(shake);
-
+                    sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
