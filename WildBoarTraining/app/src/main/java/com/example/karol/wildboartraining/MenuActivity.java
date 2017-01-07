@@ -3,6 +3,7 @@ package com.example.karol.wildboartraining;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 public class MenuActivity extends AppCompatActivity implements OnClickListener{
@@ -11,6 +12,7 @@ public class MenuActivity extends AppCompatActivity implements OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_activiti);
+        Log.d("TAG", "tworzysz!!");
         //Tworzę powiązania między przyciskami a działaniem aplikacji
         View createPlanButton = findViewById(R.id.createPlan_button);
         createPlanButton.setOnClickListener(this);
@@ -30,6 +32,7 @@ public class MenuActivity extends AppCompatActivity implements OnClickListener{
         Intent intent = null;
         switch(v.getId()){
             case R.id.createPlan_button:
+                Log.d("TAG", "kliknoles stworz plan!!");
                 intent = new Intent(this,CreatePlanActivity.class);
                 startActivity(intent);
                 break;

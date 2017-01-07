@@ -54,7 +54,7 @@ public class ClientSSLConnection {
     }
 
     public void runConnection(View v) {
-        Log.i(TAG, "makes it to here");
+        Log.d(TAG, "makes it to here");
         try {
             KeyStore ks = KeyStore.getInstance("BKS");
             InputStream keyin = v.getResources().openRawResource(R.raw.testkey);
@@ -73,33 +73,33 @@ public class ClientSSLConnection {
             chat(temp);
         } catch (UnknownHostException e) {
             Toast.makeText(v.getContext(), "Unknown host", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "Unknown host");
+            Log.d(TAG, "Unknown host");
         } catch (IOException e) {
             Toast.makeText(v.getContext(), "No I/O", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "No I/O");
+            Log.d(TAG, "No I/O");
             e.printStackTrace();
         } catch (KeyStoreException e) {
             Toast.makeText(v.getContext(), "Keystore ks error", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "Keystore ks error");
+            Log.d(TAG, "Keystore ks error");
             //System.exit(-1);
         } catch (NoSuchAlgorithmException e) {
             Toast.makeText(v.getContext(), "No such algorithm for ks.load", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "No such algorithm for ks.load");
+            Log.d(TAG, "No such algorithm for ks.load");
             e.printStackTrace();
             //System.exit(-1);
         } catch (CertificateException e) {
             Toast.makeText(v.getContext(), "certificate missing", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "certificate missing");
+            Log.d(TAG, "certificate missing");
             e.printStackTrace();
             //System.exit(-1);
         } catch (UnrecoverableKeyException e) {
             Toast.makeText(v.getContext(), "UnrecoverableKeyException", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "unrecoverableKeyException");
+            Log.d(TAG, "unrecoverableKeyException");
             e.printStackTrace();
             //System.exit(-1);
         } catch (KeyManagementException e) {
             Toast.makeText(v.getContext(), "KeyManagementException", Toast.LENGTH_SHORT).show();
-            Log.i(TAG, "key management exception");
+            Log.d(TAG, "key management exception");
             e.printStackTrace();
         }
     }
@@ -110,34 +110,34 @@ public class ClientSSLConnection {
                     socket.getSession().getPeerCertificates();
             for (int i = 0; i < serverCerts.length; i++) {
                 Certificate myCert = serverCerts[i];
-                Log.i(TAG, "====Certificate:" + (i + 1) + "====");
-                Log.i(TAG, "-Public Key-\n" + myCert.getPublicKey());
-                Log.i(TAG, "-Certificate Type-\n " + myCert.getType());
+                Log.d(TAG, "====Certificate:" + (i + 1) + "====");
+                Log.d(TAG, "-Public Key-\n" + myCert.getPublicKey());
+                Log.d(TAG, "-Certificate Type-\n " + myCert.getType());
 
                 System.out.println();
             }
         } catch (SSLPeerUnverifiedException e) {
-            Log.i(TAG, "Could not verify peer");
+            Log.d(TAG, "Could not verify peer");
             e.printStackTrace();
             System.exit(-1);
         }
     }
 
     private void printSocketInfo(SSLSocket s) {
-        Log.i(TAG, "Socket class: " + s.getClass());
-        Log.i(TAG, "   Remote address = "
+        Log.d(TAG, "Socket class: " + s.getClass());
+        Log.d(TAG, "   Remote address = "
                 + s.getInetAddress().toString());
-        Log.i(TAG, "   Remote port = " + s.getPort());
-        Log.i(TAG, "   Local socket address = "
+        Log.d(TAG, "   Remote port = " + s.getPort());
+        Log.d(TAG, "   Local socket address = "
                 + s.getLocalSocketAddress().toString());
-        Log.i(TAG, "   Local address = "
+        Log.d(TAG, "   Local address = "
                 + s.getLocalAddress().toString());
-        Log.i(TAG, "   Local port = " + s.getLocalPort());
-        Log.i(TAG, "   Need client authentication = "
+        Log.d(TAG, "   Local port = " + s.getLocalPort());
+        Log.d(TAG, "   Need client authentication = "
                 + s.getNeedClientAuth());
         SSLSession ss = s.getSession();
-        Log.i(TAG, "   Cipher suite = " + ss.getCipherSuite());
-        Log.i(TAG, "   Protocol = " + ss.getProtocol());
+        Log.d(TAG, "   Cipher suite = " + ss.getCipherSuite());
+        Log.d(TAG, "   Protocol = " + ss.getProtocol());
     }
 
     private void chat(String temp) {
@@ -148,16 +148,16 @@ public class ClientSSLConnection {
             out.write(message + "\n");
             out.flush();
         } catch (IOException e2) {
-            Log.i(TAG, "Read failed");
+            Log.d(TAG, "Read failed");
             System.exit(1);
         }
         // receive a ready command from the server
         try {
             line = in.readLine();
             mResponse.setText("SERVER SAID: " + line);
-            //Log.i(TAG,line);
+            //Log.d(TAG,line);
         } catch (IOException e1) {
-            Log.i(TAG, "Read failed");
+            Log.d(TAG, "Read failed");
             System.exit(1);
         }
     }

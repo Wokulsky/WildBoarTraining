@@ -2,6 +2,7 @@ package com.example.karol.wildboartraining;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 
@@ -10,6 +11,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
     ClientSSLConnection client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("TAG", "tworzysz Plan!!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
 
@@ -19,7 +21,9 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if ( v.getId() == R.id.connection_button) {
+        switch(v.getId()){
+            case R.id.connection_button:
+                Log.d("TAG", "Wcisnołeś guziczek Połącz!!");
                 client = new ClientSSLConnection();
                 client.runConnection(v);
             }
