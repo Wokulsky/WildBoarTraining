@@ -8,6 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
+
+import static java.security.AccessController.getContext;
 
 
 public class CreatePlanActivity extends AppCompatActivity implements View.OnClickListener {
@@ -25,7 +28,14 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
             alertDialog.setMessage("Nie jesteś zalogowany z serwerem!");
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Połącz",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int which){
-                    startActivity(intent);
+                    startActivity(intent);//Usunąć !
+                    ClientConnection client = new ClientConnection();
+                    boolean isConnected = client.runConnection();
+                    if (isConnected){
+                        Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(CreatePlanActivity.this, "Brak połączenia",Toast.LENGTH_LONG).show();
+                    }
                 }
             });
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Anuluj",new DialogInterface.OnClickListener() {
@@ -33,19 +43,12 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                     startActivity(intent);
                 }
             });
+            alertDialog.show();
         }
-        View connsectionButton = findViewById(R.id.connection_button);
-        connsectionButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.connection_button:
-                Log.d("TAG", "Wcisnołeś guziczek Połącz!!");
-                client = new ClientSSLConnection();
-                client.runConnection(v);
-            }
         }
     }
 

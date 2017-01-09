@@ -26,6 +26,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+/**
+ *  Uwaga!
+ *  Klasa przykładowa klient stworzona przezemnie, na razie tylko do wglądu
+ *
+ */
 
 public class ClientSSLConnection {
 

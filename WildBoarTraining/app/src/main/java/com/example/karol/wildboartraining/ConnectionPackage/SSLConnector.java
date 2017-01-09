@@ -1,8 +1,6 @@
 package com.example.karol.wildboartraining.ConnectionPackage;
 
 import javax.net.ssl.SSLSocket;
-import java.io.*;
-import java.io.InputStream;
 import javax.net.ssl.SSLSocketFactory;
 
 public class SSLConnector {

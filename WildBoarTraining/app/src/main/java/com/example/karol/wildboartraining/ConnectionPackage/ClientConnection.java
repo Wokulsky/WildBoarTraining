@@ -12,9 +12,20 @@ import java.util.Map;
 public class ClientConnection {
     public static boolean isLogged=false;
     private static SSLConnector sslConnector;
+
+    public ClientConnection(){
+        String currentDir = System.getProperty("user.dir")+"/testkeysore.p12";
+        System.setProperty("javax.net.ssl.keyStore",currentDir);
+        System.setProperty("javax.net.ssl.keyStorePassword","dzikidzik");
+        System.setProperty("javax.net.ssl.keyStoreType","PKCS12");
+        System.setProperty("javax.net.ssl.trustStore",currentDir);
+        System.setProperty("javax.net.ssl.trustStorePassword","dzikidzik");
+        System.setProperty("javax.net.ssl.trustStoreType","PKCS12");
+    }
     public static boolean isLogged(){
         return isLogged;
     }
+
     public static boolean logIn(String Login,String Password) {
         Map<String, String> data = new LinkedHashMap<>();
         data.put("message_type", "LoginRequest");
@@ -23,7 +34,10 @@ public class ClientConnection {
         JSONObject message = new JSONObject(data);
         String messageString = message.toString();
         try {
+
+
             PrintWriter pw = null;
+
             pw = new PrintWriter(sslConnector.sslsocket.getOutputStream());
             pw.write(messageString);
             pw.write("\n");
@@ -42,24 +56,17 @@ public class ClientConnection {
             System.out.println(e);
             return false;
         }
-    }
 
-    public static void main(String[] args) {
+    }//koniec funkcji logowania
 
-        String currentDir = System.getProperty("user.dir")+"/testkeysore.p12";
-        System.setProperty("javax.net.ssl.keyStore",currentDir);
-        System.setProperty("javax.net.ssl.keyStorePassword","dzikidzik");
-        System.setProperty("javax.net.ssl.keyStoreType","PKCS12");
-        System.setProperty("javax.net.ssl.trustStore",currentDir);
-        System.setProperty("javax.net.ssl.trustStorePassword","dzikidzik");
-        System.setProperty("javax.net.ssl.trustStoreType","PKCS12");
-
+    public boolean runConnection(){
         sslConnector = SSLConnector.getInstance();
         try {
             sslConnector.sslsocket.startHandshake();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(logIn("admin", "admin"));
+        return logIn("admin", "admin2");
+
     }
 }
