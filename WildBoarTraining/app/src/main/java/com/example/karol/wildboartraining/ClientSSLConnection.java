@@ -44,7 +44,8 @@ public class ClientSSLConnection {
     private final String TAG;
     private char keystorepass[];
     private char keypassword[];
-
+    private static ClientSSLConnection instance = null;
+    private static SSLSocket sslsocket ;
     public ClientSSLConnection() {
         port = 9998;
         TAG = "TAG";
