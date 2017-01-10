@@ -35,7 +35,6 @@ public class ClientConnection {
         String messageString = message.toString();
         try {
 
-
             PrintWriter pw = null;
 
             pw = new PrintWriter(sslConnector.sslsocket.getOutputStream());

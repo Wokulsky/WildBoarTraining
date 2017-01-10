@@ -59,11 +59,11 @@ public class ClientSSLConnection {
         ip_address = "185.157.80.59";
     }
 
-    public void runConnection(View v) {
+    public void runConnection(InputStream keyin, CreatePlanActivity v) {
         Log.d(TAG, "makes it to here");
         try {
             KeyStore ks = KeyStore.getInstance("BKS");
-            InputStream keyin = v.getResources().openRawResource(R.raw.testkey);
+            //InputStream keyin = v.getResources().openRawResource(R.raw.testkey);
             ks.load(keyin, keystorepass);
             SSLSocketFactory socketFactory = new SSLSocketFactory(ks);
             socketFactory.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
@@ -76,35 +76,35 @@ public class ClientSSLConnection {
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String temp = "absa";
-            chat(temp);
+            //chat(temp);
         } catch (UnknownHostException e) {
-            Toast.makeText(v.getContext(), "Unknown host", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "Unknown host", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Unknown host");
         } catch (IOException e) {
-            Toast.makeText(v.getContext(), "No I/O", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "No I/O", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "No I/O");
             e.printStackTrace();
         } catch (KeyStoreException e) {
-            Toast.makeText(v.getContext(), "Keystore ks error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "Keystore ks error", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Keystore ks error");
             //System.exit(-1);
         } catch (NoSuchAlgorithmException e) {
-            Toast.makeText(v.getContext(), "No such algorithm for ks.load", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "No such algorithm for ks.load", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "No such algorithm for ks.load");
             e.printStackTrace();
             //System.exit(-1);
         } catch (CertificateException e) {
-            Toast.makeText(v.getContext(), "certificate missing", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "certificate missing", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "certificate missing");
             e.printStackTrace();
             //System.exit(-1);
         } catch (UnrecoverableKeyException e) {
-            Toast.makeText(v.getContext(), "UnrecoverableKeyException", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "UnrecoverableKeyException", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "unrecoverableKeyException");
             e.printStackTrace();
             //System.exit(-1);
         } catch (KeyManagementException e) {
-            Toast.makeText(v.getContext(), "KeyManagementException", Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getApplication().getApplicationContext(), "KeyManagementException", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "key management exception");
             e.printStackTrace();
         }

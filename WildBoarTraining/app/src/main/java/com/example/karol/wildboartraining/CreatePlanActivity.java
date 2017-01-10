@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.InputStream;
+
 import static java.security.AccessController.getContext;
 
 
@@ -30,17 +32,30 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                 public void onClick(DialogInterface dialog,int which){
                     startActivity(intent);//Usunąć !
                     ClientConnection client = new ClientConnection();
-                    boolean isConnected = client.runConnection();
+                    boolean isConnected = false;
+                    try {
+                        isConnected = client.runConnection();
+                        /*ClientSSLConnection clientSSLConnection = new ClientSSLConnection();
+                        InputStream keyin = getResources().openRawResource(R.raw.testkey);
+                        clientSSLConnection.runConnection(keyin,CreatePlanActivity.this);*/
+                    }catch (Exception e){
+                        Log.d("TAG-Error",e.getLocalizedMessage());
+                        Toast.makeText(CreatePlanActivity.this, "Błąd połączenia",Toast.LENGTH_LONG).show();
+                        finish();
+                    }
                     if (isConnected){
                         Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(CreatePlanActivity.this, "Brak połączenia",Toast.LENGTH_LONG).show();
+                        finish();
                     }
                 }
             });
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Anuluj",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which){
-                    startActivity(intent);
+                    finish();
+                    //startActivity(intent);
+
                 }
             });
             alertDialog.show();
