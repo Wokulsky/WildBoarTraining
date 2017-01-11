@@ -1,12 +1,17 @@
 package com.example.karol.wildboartraining.ConnectionPackage;
-import org.json.JSONArray;
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
+import static com.example.karol.wildboartraining.ConnectionPackage.SSLConnector.sslsocket;
 
 
 public class ClientConnection {
@@ -22,7 +27,7 @@ public class ClientConnection {
         System.setProperty("javax.net.ssl.trustStorePassword","dzikidzik");
         System.setProperty("javax.net.ssl.trustStoreType","PKCS12");
     }
-    public static boolean isLogged(){
+    public static boolean IsLogged(){
         return isLogged;
     }
 
@@ -34,15 +39,15 @@ public class ClientConnection {
         JSONObject message = new JSONObject(data);
         String messageString = message.toString();
         try {
-
+            Log.d("TAG-logIn","Jestem w TRY");
             PrintWriter pw = null;
 
-            pw = new PrintWriter(sslConnector.sslsocket.getOutputStream());
+            pw = new PrintWriter(sslsocket.getOutputStream());
             pw.write(messageString);
             pw.write("\n");
             pw.flush();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(sslConnector.sslsocket.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
             String serverAnswer = br.readLine();
 
             JSONObject JSONanswer = new JSONObject(serverAnswer);
@@ -52,18 +57,24 @@ public class ClientConnection {
             isLogged=islogged;
             return  islogged;
         } catch (IOException|JSONException e) {
-            System.out.println(e);
+            Log.d("TAG-SSL",e.getMessage());
             return false;
         }
 
     }//koniec funkcji logowania
 
     public boolean runConnection(){
-        sslConnector = SSLConnector.getInstance();
+        //sslConnector = SSLConnector.getInstance();
         try {
-            sslConnector.sslsocket.startHandshake();
+          //    sslConnector.sslsocket.startHandshake();
+                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+                sslsocket = (SSLSocket)sslsocketfactory.createSocket("185.157.80.59", 7632);
+                Log.d("TAG-HandShake","Przed");
+                sslsocket.startHandshake();
+                Log.d("TAG-HandShake","Po");
+
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("TAG-SLL",e.getMessage());
         }
         return logIn("admin", "admin2");
 

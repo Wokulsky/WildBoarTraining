@@ -24,7 +24,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
         final Intent intent = new Intent(this,MenuActivity.class);
-        if (!ClientConnection.isLogged()){
+        if (!ClientConnection.IsLogged()){
             AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
             alertDialog.setTitle("Połączenie");
             alertDialog.setMessage("Nie jesteś zalogowany z serwerem!");
@@ -39,7 +39,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                         InputStream keyin = getResources().openRawResource(R.raw.testkey);
                         clientSSLConnection.runConnection(keyin,CreatePlanActivity.this);*/
                     }catch (Exception e){
-                        Log.d("TAG-Error",e.getLocalizedMessage());
+                        Log.d("TAG-CreatePlan",e.getLocalizedMessage()+" \n "+e.getMessage()+" \n" + e.toString());
                         Toast.makeText(CreatePlanActivity.this, "Błąd połączenia",Toast.LENGTH_LONG).show();
                         finish();
                     }
