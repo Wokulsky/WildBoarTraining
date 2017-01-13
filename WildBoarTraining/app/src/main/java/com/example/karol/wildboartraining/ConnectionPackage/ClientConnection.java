@@ -17,6 +17,7 @@ import static com.example.karol.wildboartraining.ConnectionPackage.SSLConnector.
 public class ClientConnection {
     public static boolean isLogged=false;
     private static SSLConnector sslConnector;
+    private static SSLSocket sslsocket2;
 
     public ClientConnection(){
         String currentDir = System.getProperty("user.dir")+"/testkeysore.p12";
@@ -41,12 +42,12 @@ public class ClientConnection {
         try {
 
             PrintWriter pw = null;
-            pw = new PrintWriter(sslConnector.sslsocket.getOutputStream());
+            pw = new PrintWriter(sslsocket2.getOutputStream());
             pw.write(messageString);
             pw.write("\n");
             pw.flush();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(sslConnector.sslsocket.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(sslsocket2.getInputStream()));
             String serverAnswer = br.readLine();
 
             JSONObject JSONanswer = new JSONObject(serverAnswer);
@@ -65,8 +66,8 @@ public class ClientConnection {
         //sslConnector = SSLConnector.getInstance();
         try {
             SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-            sslsocket = (SSLSocket)sslsocketfactory.createSocket("localhost", 7632);
-            sslsocket.startHandshake();
+            sslsocket2 = (SSLSocket)sslsocketfactory.createSocket("localhost", 7632);
+            sslsocket2.startHandshake();
         } catch (IOException e) {
             e.printStackTrace();
         }
