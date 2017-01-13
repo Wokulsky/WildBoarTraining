@@ -39,15 +39,14 @@ public class ClientConnection {
         JSONObject message = new JSONObject(data);
         String messageString = message.toString();
         try {
-            Log.d("TAG-logIn","Jestem w TRY");
-            PrintWriter pw = null;
 
-            pw = new PrintWriter(sslsocket.getOutputStream());
+            PrintWriter pw = null;
+            pw = new PrintWriter(sslConnector.sslsocket.getOutputStream());
             pw.write(messageString);
             pw.write("\n");
             pw.flush();
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(sslConnector.sslsocket.getInputStream()));
             String serverAnswer = br.readLine();
 
             JSONObject JSONanswer = new JSONObject(serverAnswer);
@@ -57,26 +56,20 @@ public class ClientConnection {
             isLogged=islogged;
             return  islogged;
         } catch (IOException|JSONException e) {
-            Log.d("TAG-SSL",e.getMessage());
+            System.out.println(e);
             return false;
         }
-
     }//koniec funkcji logowania
 
     public boolean runConnection(){
         //sslConnector = SSLConnector.getInstance();
         try {
-          //    sslConnector.sslsocket.startHandshake();
-                SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
-                sslsocket = (SSLSocket)sslsocketfactory.createSocket("185.157.80.59", 7632);
-                Log.d("TAG-HandShake","Przed");
-                sslsocket.startHandshake();
-                Log.d("TAG-HandShake","Po");
-
+            SSLSocketFactory sslsocketfactory = (SSLSocketFactory)SSLSocketFactory.getDefault();
+            sslsocket = (SSLSocket)sslsocketfactory.createSocket("localhost", 7632);
+            sslsocket.startHandshake();
         } catch (IOException e) {
-            Log.d("TAG-SLL",e.getMessage());
+            e.printStackTrace();
         }
-        return logIn("admin", "admin2");
-
+        return(logIn("admin", "admin"));
     }
 }

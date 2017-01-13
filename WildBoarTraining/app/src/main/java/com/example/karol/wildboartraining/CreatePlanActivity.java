@@ -33,16 +33,18 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                     startActivity(intent);//Usunąć !
                     ClientConnection client = new ClientConnection();
                     boolean isConnected = false;
-                    try {
-                        isConnected = client.runConnection();
+                    //try {
+                    isConnected = client.runConnection();
                         /*ClientSSLConnection clientSSLConnection = new ClientSSLConnection();
                         InputStream keyin = getResources().openRawResource(R.raw.testkey);
                         clientSSLConnection.runConnection(keyin,CreatePlanActivity.this);*/
-                    }catch (Exception e){
-                        Log.d("TAG-CreatePlan",e.getLocalizedMessage()+" \n "+e.getMessage()+" \n" + e.toString());
-                        Toast.makeText(CreatePlanActivity.this, "Błąd połączenia",Toast.LENGTH_LONG).show();
-                        finish();
-                    }
+                    //}catch (Exception e){
+                        //Log.d("TAG-CreatePlan",e.toString());
+                    if ( isConnected == false) {
+                            Toast.makeText(CreatePlanActivity.this, "Błąd połączenia", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    //}
                     if (isConnected){
                         Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
                     }else{
