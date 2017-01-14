@@ -31,15 +31,19 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Połącz",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog,int which){
                     startActivity(intent);//Usunąć !
-                    ClientConnection client = new ClientConnection();
+                    InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
+                    ClientConnection client = new ClientConnection(keyin);
                     boolean isConnected = false;
                     //try {
+
                     isConnected = client.runConnection();
+                    Log.d("TAG-Stworz","Wyszedlem z Connection");
                         /*ClientSSLConnection clientSSLConnection = new ClientSSLConnection();
                         InputStream keyin = getResources().openRawResource(R.raw.testkey);
                         clientSSLConnection.runConnection(keyin,CreatePlanActivity.this);*/
                     //}catch (Exception e){
                         //Log.d("TAG-CreatePlan",e.toString());
+                    Log.d("TAG-CreatePlan",""+isConnected);
                     if ( isConnected == false) {
                             Toast.makeText(CreatePlanActivity.this, "Błąd połączenia", Toast.LENGTH_LONG).show();
                             finish();
