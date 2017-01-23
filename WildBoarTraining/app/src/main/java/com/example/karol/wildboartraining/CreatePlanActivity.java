@@ -17,43 +17,46 @@ import static java.security.AccessController.getContext;
 
 public class CreatePlanActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ClientSSLConnection client;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("TAG", "tworzysz Plan!!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
         final Intent intent = new Intent(this,MenuActivity.class);
+
         if (!ClientConnection.IsLogged()){
+
+            //Tworzymy alterDialog
             AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
             alertDialog.setTitle("Połączenie");
             alertDialog.setMessage("Nie jesteś zalogowany z serwerem!");
+
+            //Deklarujemy Pozytywny (Uśmiechnięty) przycisk który służy do połączenia
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Połącz",new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog,int which){
-                    startActivity(intent);//Usunąć !
+
+                public void onClick(DialogInterface dialog,int which) {
+                    // startActivity(intent);//Usunąć !
+
+                    //Ładujemy klucz z folderu raw
                     InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
                     ClientConnection client = new ClientConnection(keyin);
-                    boolean isConnected = false;
-                    //try {
-
-                    isConnected = client.runConnection();
-                    Log.d("TAG-Stworz","Wyszedlem z Connection");
-                        /*ClientSSLConnection clientSSLConnection = new ClientSSLConnection();
-                        InputStream keyin = getResources().openRawResource(R.raw.testkey);
-                        clientSSLConnection.runConnection(keyin,CreatePlanActivity.this);*/
-                    //}catch (Exception e){
-                        //Log.d("TAG-CreatePlan",e.toString());
-                    Log.d("TAG-CreatePlan",""+isConnected);
-                    if ( isConnected == false) {
+                    boolean isConnected;
+                    try{
+                        isConnected = client.runConnection();
+                        Log.d("TAG-Stworz", "Wyszedlem z Connection");
+                        Log.d("TAG-CreatePlan", "" + isConnected);
+                        if (!isConnected) {
                             Toast.makeText(CreatePlanActivity.this, "Błąd połączenia", Toast.LENGTH_LONG).show();
                             finish();
                         }
-                    //}
-                    if (isConnected){
-                        Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(CreatePlanActivity.this, "Brak połączenia",Toast.LENGTH_LONG).show();
-                        finish();
+                        if (isConnected) {
+                            Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CreatePlanActivity.this, "Brak połączenia", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }catch (Exception e){
+                        Log.d("TAG-CreatePlan",e.toString());
                     }
                 }
             });
@@ -70,6 +73,5 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        }
     }
-
+}
