@@ -60,47 +60,36 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
                             EditText editText = (EditText)alertDialog.findViewById(R.id.login_in);
                             //LOGIN index 0
-                            String Login = editText.getText().toString();
-
-                            if(TextUtils.isEmpty(Login)){
-                                editText.setError("Proszę uzupełnij");
-                                return;
-                            }else{
-                                if(!Login.matches("[a-zA-Z0-9]*")){
-                                    editText.setError("Tylko litery i cyfry");
-                                    return;
-                                }
-                            }
-
+                            parameters.add(editText.getText().toString());
                             editText = (EditText)alertDialog.findViewById(R.id.password_in);
                             //PASSWORD index 1
-                            String Password = editText.getText().toString();
 
-                            if(TextUtils.isEmpty(Password)){
-                                editText.setError("Proszę uzupełnij");
-                                return;
-                            }else{
-                                if(!Password.matches("[a-zA-Z0-9]*")){
-                                    editText.setError("Tylko litery i cyfry");
-                                    return;
+                            parameters.add(editText.getText().toString());
+
+                            //TU JUŻ PO STAREMU...
+                            boolean flag = true;
+                            for (String parameter: parameters){
+                                if (!parameter.matches("[a-zA-Z0-9]*") || parameter.equals("") || parameter.equals(" ")){
+                                    flag =false;
+                                    break;
                                 }
                             }
-                            //TU JUŻ PO STAREMU...
 
-                            InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
-                            ClientConnection client = new ClientConnection(keyin,"LoginRequest",parameters);
-                            String connectionResult = client.runConnection();
+                            if ( flag ){
+                                InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
+                                ClientConnection client = new ClientConnection(keyin,"LoginRequest",parameters);
+                                String connectionResult = client.runConnection();
 
-                            if (connectionResult.equals("LoginRequest") && client.IsLogged()) {
-                                Toast.makeText(CreatePlanActivity.this, "Zalogowano", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (!client.IsLogged())
-                                    Toast.makeText(CreatePlanActivity.this, "Nie ma Cię w bazie", Toast.LENGTH_LONG).show();
-                                else
-                                    Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-
+                                if (connectionResult.equals("LoginRequest") && client.IsLogged()) {
+                                    Toast.makeText(CreatePlanActivity.this, "Zalogowano", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    if (!client.IsLogged())
+                                        Toast.makeText(CreatePlanActivity.this, "Nie ma Cię w bazie", Toast.LENGTH_LONG).show();
+                                    else
+                                        Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            }else Toast.makeText(CreatePlanActivity.this, "Źle wprowadzone dane", Toast.LENGTH_LONG).show();
 
                         }
                     });
@@ -159,24 +148,27 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                             parameters.add( editText.getText().toString() );
 
                             //Toast.makeText(CreatePlanActivity.this, parameters.get(0) + " " + parameters.get(3), Toast.LENGTH_SHORT).show();
-
+                            boolean flag = true;
                             for (String parameter: parameters){
                                 if (!parameter.matches("[a-zA-Z0-9]*") || parameter.equals("") || parameter.equals(" ")){
-                                    Toast.makeText(CreatePlanActivity.this, "Wprwadz tylko litery bądz cyfry", Toast.LENGTH_LONG).show();
-                                    finish();
+
+                                    flag = false;
+                                    break;
                                 }
                             }
+                            if ( flag ){
+                                InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
+                                ClientConnection client = new ClientConnection(keyin,"RegisterNewClient",parameters);
+                                String connectionResult = client.runConnection();
 
-                            InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
-                            ClientConnection client = new ClientConnection(keyin,"RegisterNewClient",parameters);
-                            String connectionResult = client.runConnection();
+                                if (connectionResult.equals("RegisterNewClient")) {
+                                    Toast.makeText(CreatePlanActivity.this, "Rejestracja Udana", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            }else Toast.makeText(CreatePlanActivity.this, "Źle wprowadzone dane", Toast.LENGTH_LONG).show();
 
-                            if (connectionResult.equals("RegisterNewClient")) {
-                                Toast.makeText(CreatePlanActivity.this, "Rejestracja Udana", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_LONG).show();
-                                finish();
-                            }
 
 
                         }
