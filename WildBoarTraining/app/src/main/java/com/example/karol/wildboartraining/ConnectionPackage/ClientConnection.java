@@ -18,33 +18,33 @@ public class ClientConnection {
     //Flaga czy udało nam się odpowienio połąćzyć z serverm
     private static volatile boolean isConnected = false;
 
-    private static volatile String result;
+    private static volatile String result = "ERROR";
     private SSLConnector sslConnector;
     private InputStream keyin;
-
-    private String Login ="admin";
-    private String Password="haslo";
 
     private String MessageType;
     private String messageToSend;
     private List<String> parameters;
-    public ClientConnection(InputStream keyin){
+    public ClientConnection(InputStream keyin, String messageType, List<String> parameters){
         this.keyin = keyin;
+        this.MessageType = messageType;
+        this.parameters = parameters;
     }
 
     public static boolean IsLogged(){
         return isLogged;
     }
     public static boolean IsConnected(){
-
-        result = "ERROR";
         return  isConnected;
     }
+    public static void closeConnection() {
+            isConnected = false;
+            isLogged = false;
+            result = "ERROR";
 
-    public String runConnection( String messageType, List<String> parameters){
+    }
+    public String runConnection( ){
 
-        this.MessageType = messageType;
-        this.parameters = parameters;
         new ConnectionTask().execute();
 
         while ( !IsConnected() ){
@@ -78,7 +78,7 @@ public class ClientConnection {
                 }
                 sslConnector.sendMessageToServer(messageToSend);
                 JSONObject JSONanswer = sslConnector.getMessageFromServer();
-                String answer;
+                Log.d ("TAG_CONN",JSONanswer.toString());
                 switch(JSONanswer.getString("message_type")){
 
                     case ("LoginRequest"):
@@ -86,6 +86,7 @@ public class ClientConnection {
                         result = "LoginRequest";
                         break;
                     case ("RegisterNewClient"):
+                        isLogged = true;
                         result = "RegisterNewClient";
                         break;
                     case("GetBasicData"):

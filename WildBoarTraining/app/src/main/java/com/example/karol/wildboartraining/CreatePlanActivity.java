@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -19,50 +22,176 @@ import static java.security.AccessController.getContext;
 
 public class CreatePlanActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //
+    //  Lasciate ogne speranza, voi ch’intrate.
+    //
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("TAG", "tworzysz Plan!!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
 
-        if (!ClientConnection.IsLogged()){
+        View logOutButton = findViewById(R.id.logout_button);
+        logOutButton.setOnClickListener(this);
 
-            //Tworzymy alterDialog
+        if (!ClientConnection.IsLogged()){
             AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
             alertDialog.setTitle("Połączenie");
             alertDialog.setMessage("Nie jesteś zalogowany z serwerem!");
 
-            //Deklarujemy Pozytywny (Uśmiechnięty) przycisk który służy do połączenia
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Połącz",new DialogInterface.OnClickListener() {
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Logowanie",new DialogInterface.OnClickListener() {
 
-                public void onClick(DialogInterface dialog,int which) {
-                    // startActivity(intent);//Usunąć !
+                //
+                //  Kliknołeś w Zaloguj, więc wyświeetla się altertbutton związany z logowaniem
+                //
+                public void onClick(DialogInterface dialog, int which) {
+                    final AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
+                    // Get the layout inflater
+                    LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                    alertDialog.setView(inflater.inflate(R.layout.dialog_signin, null));
 
-                    //Ładujemy klucz z folderu raw
-                    InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
-                    ClientConnection client = new ClientConnection(keyin);
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Logowanie", new DialogInterface.OnClickListener() {
 
-                    try{
-                        List<String> list = new ArrayList<String>();
-                        list.add("admin");
-                        list.add("haslo");
-                        String connectionResult = client.runConnection("LoginRequest",list);
-                        Log.d("TAG-Stworz", "Wyszedlem z Connection");
+                        public void onClick(DialogInterface dialog, int which) {
+                            //PANEL ZALOGOWANIA BIERZEMY STRINGI OD UŻYTKOWNIKA
+                            String messageType = "LoginRequest";
+                            List<String> parameters  = new ArrayList<String>();
 
-                        if (connectionResult.equals("LoginRequest")) {
-                            Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(CreatePlanActivity.this, "Brak połączenia", Toast.LENGTH_LONG).show();
-                            finish();
+                            EditText editText = (EditText)alertDialog.findViewById(R.id.login_in);
+                            //LOGIN index 0
+                            String Login = editText.getText().toString();
+
+                            if(TextUtils.isEmpty(Login)){
+                                editText.setError("Proszę uzupełnij");
+                                return;
+                            }else{
+                                if(!Login.matches("[a-zA-Z0-9]*")){
+                                    editText.setError("Tylko litery i cyfry");
+                                    return;
+                                }
+                            }
+
+                            editText = (EditText)alertDialog.findViewById(R.id.password_in);
+                            //PASSWORD index 1
+                            String Password = editText.getText().toString();
+
+                            if(TextUtils.isEmpty(Password)){
+                                editText.setError("Proszę uzupełnij");
+                                return;
+                            }else{
+                                if(!Password.matches("[a-zA-Z0-9]*")){
+                                    editText.setError("Tylko litery i cyfry");
+                                    return;
+                                }
+                            }
+                            //TU JUŻ PO STAREMU...
+
+                            InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
+                            ClientConnection client = new ClientConnection(keyin,"LoginRequest",parameters);
+                            String connectionResult = client.runConnection();
+
+                            if (connectionResult.equals("LoginRequest") && client.IsLogged()) {
+                                Toast.makeText(CreatePlanActivity.this, "Zalogowano", Toast.LENGTH_SHORT).show();
+                            } else {
+                                if (!client.IsLogged())
+                                    Toast.makeText(CreatePlanActivity.this, "Nie ma Cię w bazie", Toast.LENGTH_LONG).show();
+                                else
+                                    Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+
+
                         }
-                    }catch (Exception e){
-                        Log.d("TAG-CreatePlan",e.toString());
-                    }
+                    });
+
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Anuluj", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+
+                        }
+                    });
+
+                    alertDialog.show();
                 }
+
             });
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Anuluj",new DialogInterface.OnClickListener() {
+
+            //---------------------KONIEC PRZYCISKU "ZALOGUJ"---------------------
+
+
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Rejestracja",new DialogInterface.OnClickListener() {
+
+                //
+                //  Kliknołeś w Rejestracje, więc tworzymy alterDialog dla Rejestracji
+                //
                 public void onClick(DialogInterface dialog, int which){
-                    finish();
+
+                    final AlertDialog alertDialogRegister = new AlertDialog.Builder(CreatePlanActivity.this).create();
+                    // Get the layout inflater
+                    LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+                    alertDialogRegister.setView(inflater.inflate(R.layout.dialog_signup, null));
+
+                    alertDialogRegister.setButton(AlertDialog.BUTTON_POSITIVE, "Rejestruj", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            //PANEL REJESTRACJI UŻYTKOWINKA
+
+                            String messageType = "RegisterNewClient";
+                            List<String> parameters  = new ArrayList<String>();
+
+                            EditText editText = (EditText)alertDialogRegister.findViewById(R.id.login_up);
+                            //LOGIN index 0
+                            parameters.add( editText.getText().toString() );
+
+                            editText = (EditText)alertDialogRegister.findViewById(R.id.password_up);
+                            //PASSWORD index 1
+                            parameters.add( editText.getText().toString() );
+
+                            editText = (EditText)alertDialogRegister.findViewById(R.id.first_name);
+
+                            parameters.add( editText.getText().toString() );
+
+                            editText = (EditText)alertDialogRegister.findViewById(R.id.last_name);
+
+                            parameters.add( editText.getText().toString() );
+
+                            //Toast.makeText(CreatePlanActivity.this, parameters.get(0) + " " + parameters.get(3), Toast.LENGTH_SHORT).show();
+
+                            for (String parameter: parameters){
+                                if (!parameter.matches("[a-zA-Z0-9]*") || parameter.equals("") || parameter.equals(" ")){
+                                    Toast.makeText(CreatePlanActivity.this, "Wprwadz tylko litery bądz cyfry", Toast.LENGTH_LONG).show();
+                                    finish();
+                                }
+                            }
+
+                            InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
+                            ClientConnection client = new ClientConnection(keyin,"RegisterNewClient",parameters);
+                            String connectionResult = client.runConnection();
+
+                            if (connectionResult.equals("RegisterNewClient")) {
+                                Toast.makeText(CreatePlanActivity.this, "Rejestracja Udana", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+
+
+                        }
+                    });
+
+                    alertDialogRegister.setButton(AlertDialog.BUTTON_NEGATIVE, "Anuluj", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+
+                        }
+                    });
+
+                    alertDialogRegister.show();
+
 
                 }
             });
@@ -72,5 +201,13 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.logout_button:
+                ClientConnection.closeConnection();
+                Toast.makeText(CreatePlanActivity.this, "Wylogowano", Toast.LENGTH_LONG).show();
+                finish();
+                break;
+        }
     }
+
 }

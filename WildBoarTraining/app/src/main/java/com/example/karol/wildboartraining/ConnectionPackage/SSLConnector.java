@@ -56,6 +56,10 @@ public class SSLConnector {
         }
 
     }
+    public void closeConnection() throws IOException {
+        sslsocket.close();
+        instance = null;
+    }
     private void LoadKey(InputStream keyin) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException {
 
         this.keyin = keyin;

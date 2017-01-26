@@ -6,7 +6,7 @@
 
     <ImageView
         android:src="@drawable/signinlogo"
-        android:layout_width="382dp"
+        android:layout_width="match_parent"
         android:layout_height="66dp"
         android:scaleType="center"
         android:background="@color/white"
@@ -14,7 +14,7 @@
         android:id="@+id/imageView2" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/login_in"
         android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:layout_marginBottom="4dp"
         android:hint="@string/username" />
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/password_in"
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
