@@ -32,7 +32,7 @@ public class MenuActivity extends AppCompatActivity implements OnClickListener{
         Intent intent = null;
         switch(v.getId()){
             case R.id.createPlan_button:
-                Log.d("TAG", "kliknoles stworz plan!!");
+                Log.d("TAG", "kliknales stworz plan!!");
                 intent = new Intent(this,CreatePlanActivity.class);
                 startActivity(intent);
                 break;
