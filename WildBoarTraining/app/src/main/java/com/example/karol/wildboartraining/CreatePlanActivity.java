@@ -8,6 +8,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.LayoutInflater;
+
 import android.widget.Toast;
 
 import java.io.InputStream;
@@ -24,19 +26,12 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
         setContentView(R.layout.activity_create_plan);
         final Intent intent = new Intent(this,MenuActivity.class);
 
-        if (!ClientConnection.IsLogged()){
-
-            //Tworzymy alterDialog
-            AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
-            alertDialog.setTitle("Połączenie");
-            alertDialog.setMessage("Nie jesteś zalogowany z serwerem!");
-
-            //Deklarujemy Pozytywny (Uśmiechnięty) przycisk który służy do połączenia
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Połącz",new DialogInterface.OnClickListener() {
-
-                public void onClick(DialogInterface dialog,int which) {
-                    // startActivity(intent);//Usunąć !
-
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreatePlanActivity.this);
+        LayoutInflater inflater = CreatePlanActivity.this.getLayoutInflater();
+        builder.setView(inflater.inflate(R.layout.activity_create_plan, null))
+            .setPositiveButton(R.id.log_in_button, new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int id){
                     //Ładujemy klucz z folderu raw
                     InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
                     ClientConnection client = new ClientConnection(keyin);
@@ -59,6 +54,28 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                         Log.d("TAG-CreatePlan",e.toString());
                     }
                 }
+            })/*
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            LoginDialogFragment.this.getDialog().cancel();
+                        }
+                    })*/;
+            //return builder.create();
+
+/*
+        if (!ClientConnection.IsLogged()){
+
+            //Tworzymy alterDialog
+            AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
+            alertDialog.setTitle("Logowanie");
+            alertDialog.setMessage("Nie jesteś zalogowany");
+
+            //Deklarujemy Pozytywny (Uśmiechnięty) przycisk który służy do połączenia
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Zaloguj",new DialogInterface.OnClickListener() {
+
+                public void onClick(DialogInterface dialog,int which) {
+                    // startActivity(intent);//Usunąć !
+                }
             });
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Anuluj",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which){
@@ -68,7 +85,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                 }
             });
             alertDialog.show();
-        }
+        }*/
     }
 
     @Override
