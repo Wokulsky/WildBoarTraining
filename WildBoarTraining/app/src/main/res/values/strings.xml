@@ -12,4 +12,10 @@
     <string name="password_hint">Hasło</string>
     <string name="new_account">Utwórz nowe konto</string>
     <string name="zaloguj">Zaloguj</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="password">Hasło</string>
+    <string name="signin">Zaloguj</string>
+    <string name="cancel">Anuluj</string>
+    <string name="first_name">Imię</string>
+    <string name="last_name">Nazwisko</string>
 </resources>
