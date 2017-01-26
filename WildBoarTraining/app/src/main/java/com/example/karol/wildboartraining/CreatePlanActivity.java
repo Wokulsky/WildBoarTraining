@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.security.AccessController.getContext;
 
@@ -22,7 +24,6 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
         Log.d("TAG", "tworzysz Plan!!");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_plan);
-        final Intent intent = new Intent(this,MenuActivity.class);
 
         if (!ClientConnection.IsLogged()){
 
@@ -40,16 +41,15 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                     //Ładujemy klucz z folderu raw
                     InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
                     ClientConnection client = new ClientConnection(keyin);
-                    boolean isConnected;
+
                     try{
-                        isConnected = client.runConnection();
+                        List<String> list = new ArrayList<String>();
+                        list.add("admin");
+                        list.add("haslo");
+                        String connectionResult = client.runConnection("LoginRequest",list);
                         Log.d("TAG-Stworz", "Wyszedlem z Connection");
-                        Log.d("TAG-CreatePlan", "" + isConnected);
-                        if (!isConnected) {
-                            Toast.makeText(CreatePlanActivity.this, "Błąd połączenia", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                        if (isConnected) {
+
+                        if (connectionResult.equals("LoginRequest")) {
                             Toast.makeText(CreatePlanActivity.this, "Połączono", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(CreatePlanActivity.this, "Brak połączenia", Toast.LENGTH_LONG).show();
@@ -63,7 +63,6 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Anuluj",new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which){
                     finish();
-                    //startActivity(intent);
 
                 }
             });

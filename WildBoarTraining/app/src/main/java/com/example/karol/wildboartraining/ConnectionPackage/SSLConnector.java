@@ -1,7 +1,13 @@
 package com.example.karol.wildboartraining.ConnectionPackage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
@@ -56,6 +62,17 @@ public class SSLConnector {
         ks = KeyStore.getInstance("PKCS12");
         ks.load(keyin,keystorepass);
 
+    }
+    public void sendMessageToServer(String messageToSend) throws IOException {
+        PrintWriter pw = new PrintWriter(sslsocket.getOutputStream());
+        pw.write(messageToSend);
+        pw.write("\n");
+        pw.flush();
+    }
+    public JSONObject getMessageFromServer() throws JSONException, IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
+        String serverAnswer = br.readLine();
+        return new JSONObject(serverAnswer);
     }
     public static SSLConnector getInstance(InputStream keyin)  {
         synchronized(SSLConnector.class){
