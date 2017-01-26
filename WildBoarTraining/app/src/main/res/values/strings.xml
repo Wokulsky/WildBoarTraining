@@ -8,4 +8,10 @@
     <string name="exit_lable">Wyjscie</string>
     <string name="connect_server_lable">Połączenie z serverem</string>
     <string name="connect_button_lable">Połącz</string>
+    <string name="username">Nazwa użytkownika</string>
+    <string name="password">Hasło</string>
+    <string name="signin">Zaloguj</string>
+    <string name="cancel">Anuluj</string>
+    <string name="first_name">Imię</string>
+    <string name="last_name">Nazwisko</string>
 </resources>
