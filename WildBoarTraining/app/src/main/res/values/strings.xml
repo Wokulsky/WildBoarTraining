@@ -5,7 +5,11 @@
     <string name="createPlan_lable">Stwórz plan</string>
     <string name="showPlan_lable">Pokaż plan</string>
     <string name="option_lable">Opcje</string>
-    <string name="exit_lable">Wyjscie</string>
-    <string name="connect_server_lable">Połączenie z serverem</string>
+    <string name="exit_lable">Wyjście</string>
+    <string name="connect_server_lable">Logowanie</string>
     <string name="connect_button_lable">Połącz</string>
+    <string name="login_hint">Login</string>
+    <string name="password_hint">Hasło</string>
+    <string name="new_account">Utwórz nowe konto</string>
+    <string name="zaloguj">Zaloguj</string>
 </resources>
