@@ -57,4 +57,40 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:hint="@string/last_name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/email"
+        android:layout_weight="1.20"
+        android:hint="@string/emain" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="10"
+        android:id="@+id/phone_number"
+        android:layout_weight="0.26"
+        android:hint="@string/phone_number" />
+
+    <CheckBox
+        android:text="@string/sms_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/VerifySmsBox"
+        android:layout_weight="0.28"
+        android:checked="true"
+        android:duplicateParentState="false" />
+
+    <CheckBox
+        android:text="@string/email_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/VerifyEmailBox"
+        android:layout_weight="1.20"
+        android:checked="false" />
+
 </LinearLayout>

@@ -9,5 +9,8 @@ public class OptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option);
+        //Macie pomysły na opcje?
+        //Myślę o automatycznym logowaniu, jakimś przypominaniu o treningu itp
+        //TODO
     }
 }

@@ -9,6 +9,7 @@ public class ShowPlanActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_plan);
-
+        //Tu powinno byc pokazywanie planu. Może też modyfikacja
+        //TODO
     }
 }

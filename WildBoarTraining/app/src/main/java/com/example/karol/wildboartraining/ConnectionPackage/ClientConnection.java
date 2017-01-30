@@ -17,14 +17,25 @@ public class ClientConnection {
     private static volatile boolean isLogged=false;
     //Flaga czy udało nam się odpowienio połąćzyć z serverm
     private static volatile boolean isConnected = false;
+    //Jak ja żałuje że nia ma plików nagłówkowych...cały ten syf był by uporządkowany...
+
+    private static volatile boolean isVerified = false;
 
     private static volatile String result = "ERROR";
+
     private SSLConnector sslConnector;
+
     private InputStream keyin;
 
     private String MessageType;
+
     private String messageToSend;
+
     private List<String> parameters;
+
+    private String messageResult;
+
+    //KONSTRUKTOR
     public ClientConnection(InputStream keyin, String messageType, List<String> parameters){
         this.keyin = keyin;
         this.MessageType = messageType;
@@ -54,7 +65,13 @@ public class ClientConnection {
         return result;
     }
 
+    public String verifyClient(List<String> parameters){
 
+        this.MessageType = "AddDevice";
+        this.parameters = parameters;
+        this.isConnected = false;
+        return this.runConnection();
+    }
     private class ConnectionTask extends AsyncTask<Void,Void,Void> {
 
         @Override
@@ -67,10 +84,13 @@ public class ClientConnection {
                 switch(MessageType){
 
                     case ("LoginRequest"):
-                        messageToSend = JSONMessage.jsonLogin( parameters.get(0), parameters.get(1));
+                        messageToSend = JSONMessage.jsonLogin( parameters);
                         break;
                     case ("RegisterNewClient"):
-                        messageToSend = JSONMessage.jsonRegister(parameters.get(0),parameters.get(1),parameters.get(2),parameters.get(3));
+                        messageToSend = JSONMessage.jsonRegister(parameters);
+                        break;
+                    case ("AddDevice"):
+                        messageToSend = JSONMessage.jsonAddDevice(parameters);
                         break;
                     default:
                         messageToSend = JSONMessage.jsonGetData();
@@ -84,10 +104,24 @@ public class ClientConnection {
                     case ("LoginRequest"):
                         isLogged = JSONanswer.getBoolean("islogged");
                         result = "LoginRequest";
+                        if (JSONanswer.getString("text").equals("enter verify code")){
+                            result = "enter verify code";
+                        }
                         break;
                     case ("RegisterNewClient"):
                         isLogged = true;
                         result = "RegisterNewClient";
+                        break;
+                    case ("AddDevice"):
+                        isVerified = JSONanswer.getBoolean("added");
+                        if ( isVerified ) {
+                            result = "AddDevice";
+                            isLogged = true;
+                        }
+                        else {
+                            result = JSONanswer.getString("text");
+                            isLogged = false;
+                        }
                         break;
                     case("GetBasicData"):
                         result = "GetBasicData";
