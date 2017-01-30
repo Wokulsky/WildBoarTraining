@@ -109,7 +109,7 @@ public class ClientConnection {
                         }
                         break;
                     case ("RegisterNewClient"):
-                        isLogged = true;
+                        isLogged = false;
                         result = "RegisterNewClient";
                         break;
                     case ("AddDevice"):
