@@ -35,9 +35,12 @@ public class JSONMessage {
     }
     static String jsonAddDevice( List<String> parameters ){
         Map<String,String> data = new LinkedHashMap<>();
+        data.put("message_type","AddDevice");
         data.put("login", parameters.get(0));
         data.put("password", parameters.get(1));
-        data.put("verify_code", parameters.get(2));
+        data.put("device_id", parameters.get(2));
+        data.put("verify_code",parameters.get(3));
+
         return new JSONObject(data).toString();
     }
 }

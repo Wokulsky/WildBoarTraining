@@ -51,7 +51,7 @@ public class ClientConnection {
     public static void closeConnection() {
             isConnected = false;
             isLogged = false;
-            result = "ERROR";
+            //result = "ERROR";
 
     }
     public String runConnection( ){
@@ -99,14 +99,23 @@ public class ClientConnection {
                 sslConnector.sendMessageToServer(messageToSend);
                 JSONObject JSONanswer = sslConnector.getMessageFromServer();
                 Log.d ("TAG_CONN",JSONanswer.toString());
+
                 switch(JSONanswer.getString("message_type")){
 
                     case ("LoginRequest"):
+                        Log.d("TAG_LogReq",JSONanswer.getString("message_type"));
                         isLogged = JSONanswer.getBoolean("islogged");
                         result = "LoginRequest";
-                        if (JSONanswer.getString("text").equals("enter verify code")){
-                            result = "enter verify code";
+                        if ( !isLogged  ){
+                            try {
+                                if (JSONanswer.getString("text").equals("enter verify code")) {
+                                    result = "enter verify code";
+                                }
+                            }catch(Exception ex){
+                                result = "ERROR";
+                            }
                         }
+
                         break;
                     case ("RegisterNewClient"):
                         isLogged = false;
@@ -128,7 +137,7 @@ public class ClientConnection {
                         break;
                     default://Mamy Error!
                         isLogged = false;
-                        result ="ERROR";
+                        result ="ERRORDEFAULT";
                         break;
                 }
 

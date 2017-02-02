@@ -30,6 +30,10 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
     //  Lasciate ogne speranza, voi ch’intrate.
     //
 
+
+    //TODO
+    //Przerobić z AlertDialogów na Activity, przynajmniej część związaną z Wyborem między rejestracją a logowaniem
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("TAG", "tworzysz Plan!!");
@@ -62,7 +66,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE,"Logowanie",new DialogInterface.OnClickListener() {
 
                 //
-                //  Kliknołeś w Zaloguj, więc wyświeetla się altertbutton związany z logowaniem
+                //  Kliknołeś w Zaloguj, więc wyświeetla się alertdialog związany z logowaniem
                 //
                 public void onClick(DialogInterface dialog, int which) {
                     final AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
@@ -88,12 +92,12 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
                             //TU JUŻ PO STAREMU...
                             boolean flag = true;
-                            for (String parameter: parameters){
+                            /*for (String parameter: parameters){
                                 if (!parameter.matches("[a-zA-Z0-9]*") || parameter.equals("") || parameter.equals(" ")){
                                     flag =false;
                                     break;
                                 }
-                            }
+                            }*/
                             parameters.add(macAddress);
                             //Jeżeli danę są dobrze wprowadzone to
                             if ( flag ){
@@ -101,24 +105,26 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                                 InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
                                 final ClientConnection client = new ClientConnection(keyin,"LoginRequest",parameters);
                                 String connectionResult = client.runConnection();
-
+                                Log.d("Tag-CPA",connectionResult);
                                 if (connectionResult.equals("LoginRequest") && client.IsLogged()) {
                                     Toast.makeText(CreatePlanActivity.this, "Zalogowano", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    if (client.equals("enter verify code") ){
+                                    if (connectionResult.equals("enter verify code") ){
                                         final AlertDialog alertVerifyDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
                                         // Get the layout inflater
-                                        LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
-                                        alertVerifyDialog.setView(inflater.inflate(R.layout.verify_alert, null));
+                                        LayoutInflater inflaterVerify = LayoutInflater.from(getApplicationContext());
+                                        alertVerifyDialog.setView(inflaterVerify.inflate(R.layout.verify_alert, null));
                                         final List<String> verifyParametrs = new ArrayList<String>();
                                         verifyParametrs.add(parameters.get(0));
                                         verifyParametrs.add(parameters.get(1));
                                         verifyParametrs.add(macAddress);
+
+
                                         alertVerifyDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Wyślij", new DialogInterface.OnClickListener() {
-
-
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
+                                                EditText editTextVerify = (EditText)alertVerifyDialog.findViewById(R.id.verify);
+                                                verifyParametrs.add(editTextVerify.getText().toString());
 
                                                 String ans = client.verifyClient(verifyParametrs);
 
@@ -137,10 +143,12 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                                                 finish();
                                             }
                                         });
+                                        alertVerifyDialog.show();
                                     }
-                                    else
-                                        Toast.makeText(CreatePlanActivity.this, "Błąd", Toast.LENGTH_SHORT).show();
-                                    finish();
+                                    else {
+                                        Toast.makeText(CreatePlanActivity.this, "Błąd Logowania", Toast.LENGTH_LONG).show();
+                                        finish();
+                                    }
                                 }
                             }else Toast.makeText(CreatePlanActivity.this, "Źle wprowadzone dane", Toast.LENGTH_LONG).show();
 
