@@ -33,6 +33,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
     //TODO
     //Przerobić z AlertDialogów na Activity, przynajmniej część związaną z Wyborem między rejestracją a logowaniem
+    //Resztę w sumie też
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +70,11 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                 //  Kliknołeś w Zaloguj, więc wyświeetla się alertdialog związany z logowaniem
                 //
                 public void onClick(DialogInterface dialog, int which) {
+
                     final AlertDialog alertDialog = new AlertDialog.Builder(CreatePlanActivity.this).create();
-                    // Get the layout inflater
-                    Toast.makeText(CreatePlanActivity.this, macAddress, Toast.LENGTH_LONG).show();
+
                     LayoutInflater inflater = LayoutInflater.from(getApplicationContext());
+
                     alertDialog.setView(inflater.inflate(R.layout.dialog_signin, null));
 
                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Logowanie", new DialogInterface.OnClickListener() {
