@@ -6,6 +6,7 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.*;
+import java.util.HashMap;
 import java.util.List;
 
 public class ClientConnection {
@@ -21,7 +22,7 @@ public class ClientConnection {
 
     private static volatile boolean isVerified = false;
 
-    private static volatile String result = "ERROR";
+    private static volatile String messageResult = "ERROR";
 
     private SSLConnector sslConnector;
 
@@ -31,12 +32,11 @@ public class ClientConnection {
 
     private String messageToSend;
 
-    private List<String> parameters;
-
-    private String messageResult;
+    private HashMap<String,String> parameters;
+    
 
     //KONSTRUKTOR
-    public ClientConnection(InputStream keyin, String messageType, List<String> parameters){
+    public ClientConnection(InputStream keyin, String messageType, HashMap<String,String> parameters){
         this.keyin = keyin;
         this.MessageType = messageType;
         this.parameters = parameters;
@@ -51,7 +51,7 @@ public class ClientConnection {
     public static void closeConnection() {
             isConnected = false;
             isLogged = false;
-            //result = "ERROR";
+            //messageResult = "ERROR";
 
     }
     public String runConnection( ){
@@ -62,10 +62,10 @@ public class ClientConnection {
             //Czekamy aż się połączy! - czekamy aż falaga isConnected będzie zwrócona na true
         }
 
-        return result;
+        return messageResult;
     }
 
-    public String verifyClient(List<String> parameters){
+    public String verifyClient(HashMap<String,String> parameters){
 
         this.MessageType = "AddDevice";
         this.parameters = parameters;
@@ -105,39 +105,39 @@ public class ClientConnection {
                     case ("LoginRequest"):
                         Log.d("TAG_LogReq",JSONanswer.getString("message_type"));
                         isLogged = JSONanswer.getBoolean("islogged");
-                        result = "LoginRequest";
+                        messageResult = "LoginRequest";
                         if ( !isLogged  ){
                             try {
                                 if (JSONanswer.getString("text").equals("enter verify code")) {
-                                    result = "enter verify code";
+                                    messageResult = "enter verify code";
                                 }
                             }catch(Exception ex){
-                                result = "ERROR";
+                                messageResult = "ERROR";
                             }
                         }
 
                         break;
                     case ("RegisterNewClient"):
                         isLogged = false;
-                        result = "RegisterNewClient";
+                        messageResult = "RegisterNewClient";
                         break;
                     case ("AddDevice"):
                         isVerified = JSONanswer.getBoolean("added");
                         if ( isVerified ) {
-                            result = "AddDevice";
+                            messageResult = "AddDevice";
                             isLogged = true;
                         }
                         else {
-                            result = JSONanswer.getString("text");
+                            messageResult = JSONanswer.getString("text");
                             isLogged = false;
                         }
                         break;
                     case("GetBasicData"):
-                        result = "GetBasicData";
+                        messageResult = "GetBasicData";
                         break;
                     default://Mamy Error!
                         isLogged = false;
-                        result ="ERRORDEFAULT";
+                        messageResult ="ERRORDEFAULT";
                         break;
                 }
 

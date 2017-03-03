@@ -33,5 +33,12 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="@string/password"/>
+        android:hint="@string/password"
+        />
+
+    <Button
+        android:text="Zaloguj"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/signInButton" />
 </LinearLayout>

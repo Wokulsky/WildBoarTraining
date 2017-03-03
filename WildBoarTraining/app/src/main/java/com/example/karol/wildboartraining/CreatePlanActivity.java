@@ -3,22 +3,20 @@ import com.example.karol.wildboartraining.ConnectionPackage.ClientConnection;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static java.security.AccessController.getContext;
@@ -29,7 +27,12 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
     //
     //  Lasciate ogne speranza, voi ch’intrate.
     //
+    /*
+        "On otrze z ich oczu wszelką łzę.
+            Nie będzie już odtąd bałaganu ani żadnego smutku, ani narzekań, ani utrapienia,
+            albowiem pierwsze wersje kodu przeminą. "
 
+     */
 
     //TODO
     //Przerobić z AlertDialogów na Activity, przynajmniej część związaną z Wyborem między rejestracją a logowaniem
@@ -43,7 +46,6 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
         View logOutButton = findViewById(R.id.logout_button);
         logOutButton.setOnClickListener(this);
-
 
 
         if (!ClientConnection.IsLogged()){
@@ -80,17 +82,18 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                     alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Logowanie", new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface dialog, int which) {
+
                             //PANEL ZALOGOWANIA BIERZEMY STRINGI OD UŻYTKOWNIKA
                             String messageType = "LoginRequest";
-                            List<String> parameters  = new ArrayList<String>();
+                            HashMap<String,String> parameters = new HashMap<>();
 
                             EditText editText = (EditText)alertDialog.findViewById(R.id.login_in);
-                            //LOGIN index 0
-                            parameters.add(editText.getText().toString());
-                            editText = (EditText)alertDialog.findViewById(R.id.password_in);
-                            //PASSWORD index 1
 
-                            parameters.add(editText.getText().toString());
+                            parameters.put("login",editText.getText().toString());
+
+                            editText = (EditText)alertDialog.findViewById(R.id.password_in);
+
+                            parameters.put("password",editText.getText().toString());
 
                             //TU JUŻ PO STAREMU...
                             boolean flag = true;
@@ -100,7 +103,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                                     break;
                                 }
                             }*/
-                            parameters.add(macAddress);
+                            parameters.put("device_id",macAddress);
                             //Jeżeli danę są dobrze wprowadzone to
                             if ( flag ){
 
@@ -116,17 +119,17 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                                         // Get the layout inflater
                                         LayoutInflater inflaterVerify = LayoutInflater.from(getApplicationContext());
                                         alertVerifyDialog.setView(inflaterVerify.inflate(R.layout.verify_alert, null));
-                                        final List<String> verifyParametrs = new ArrayList<String>();
-                                        verifyParametrs.add(parameters.get(0));
-                                        verifyParametrs.add(parameters.get(1));
-                                        verifyParametrs.add(macAddress);
+                                        final HashMap<String,String> verifyParametrs = new HashMap<>();
+                                        verifyParametrs.put("login",parameters.get(0));
+                                        verifyParametrs.put("password",parameters.get(1));
+                                        verifyParametrs.put("id_device",macAddress);
 
 
                                         alertVerifyDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Wyślij", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 EditText editTextVerify = (EditText)alertVerifyDialog.findViewById(R.id.verify);
-                                                verifyParametrs.add(editTextVerify.getText().toString());
+                                                verifyParametrs.put("verify_code",editTextVerify.getText().toString());
 
                                                 String ans = client.verifyClient(verifyParametrs);
 
@@ -193,32 +196,31 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                             //PANEL REJESTRACJI UŻYTKOWINKA
 
                             String messageType = "RegisterNewClient";
-                            List<String> parameters  = new ArrayList<String>();
+                            HashMap<String,String> parameters = new HashMap<>();
 
                             EditText editText = (EditText)alertDialogRegister.findViewById(R.id.login_up);
-                            //LOGIN index 0
-                            parameters.add( editText.getText().toString() );
+
+                            parameters.put("login", editText.getText().toString() );
 
                             editText = (EditText)alertDialogRegister.findViewById(R.id.password_up);
-                            //PASSWORD index 1
-                            parameters.add( editText.getText().toString() );
+
+                            parameters.put("password", editText.getText().toString() );
 
                             editText = (EditText)alertDialogRegister.findViewById(R.id.first_name);
 
-                            parameters.add( editText.getText().toString() );
+                            parameters.put("name", editText.getText().toString() );
 
                             editText = (EditText)alertDialogRegister.findViewById(R.id.last_name);
 
-                            parameters.add( editText.getText().toString() );
+                            parameters.put( "lastname",editText.getText().toString() );
 
                             editText = (EditText)alertDialogRegister.findViewById(R.id.phone_number);
 
-                            parameters.add( editText.getText().toString() );
+                            parameters.put("PHONE", editText.getText().toString() );
 
                             editText = (EditText)alertDialogRegister.findViewById(R.id.email);
 
-                            parameters.add( editText.getText().toString() );
-
+                            parameters.put("EMAIL", editText.getText().toString() );
 
                             //parameters.add(macAddress);
                             final CheckBox smsVerifyBox = (CheckBox) alertDialogRegister.findViewById(R.id.VerifySmsBox);
@@ -238,7 +240,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                                 Toast.makeText(CreatePlanActivity.this, verify, Toast.LENGTH_LONG).show();
                             }
 
-                            parameters.add(verify);
+                            parameters.put("verify_way",verify);
 
                             InputStream keyin = CreatePlanActivity.this.getResources().openRawResource(R.raw.testkeysore);
                             ClientConnection client = new ClientConnection(keyin,"RegisterNewClient",parameters);
