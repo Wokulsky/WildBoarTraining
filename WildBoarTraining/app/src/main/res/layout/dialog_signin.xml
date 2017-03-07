@@ -1,17 +1,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@drawable/greybackground"
+    android:gravity="center"
     android:weightSum="1">
-
-    <ImageView
-        android:src="@drawable/signinlogo"
-        android:layout_width="match_parent"
-        android:layout_height="66dp"
-        android:scaleType="center"
-        android:background="@color/white"
-        android:contentDescription="@string/app_name"
-        android:id="@+id/imageView2" />
 
     <EditText
         android:id="@+id/login_in"
@@ -22,7 +17,10 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="@string/username" />
+        android:hint="@string/username"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColorHint="@color/white" />
+
     <EditText
         android:id="@+id/password_in"
         android:inputType="textPassword"
@@ -34,11 +32,12 @@
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
         android:hint="@string/password"
-        />
+        android:textColorHint="@color/white"
+        android:gravity="center_vertical|center" />
 
     <Button
-        android:text="Zaloguj"
-        android:layout_width="match_parent"
+        android:text="@string/log_in"
+        android:layout_width="203dp"
         android:layout_height="match_parent"
         android:id="@+id/signInButton" />
 </LinearLayout>

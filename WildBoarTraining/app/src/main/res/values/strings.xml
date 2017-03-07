@@ -14,9 +14,12 @@
     <string name="cancel">Anuluj</string>
     <string name="first_name">Imię</string>
     <string name="last_name">Nazwisko</string>
-    <string name="emain">Adres email</string>
+    <string name="email">Adres email</string>
     <string name="phone_number">Numer telefonu</string>
     <string name="sms_verify">Weryfikacja sms</string>
+    <string name="registry">Rejestruj</string>
     <string name="email_verify">Weryfickaja email</string>
     <string name="verify_code">Wprowadź kod weryfikacjyjny</string>
+    <string name="log_in">Zaloguj</string>
+
 </resources>
