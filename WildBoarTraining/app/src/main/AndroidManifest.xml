@@ -33,14 +33,7 @@
         <activity android:name=".CreatePlanActivity" />
         <activity android:name=".SignInActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".SurveyPackage.SurveyMainActivity" />
-        <activity android:name=".SurveyPackage.FirstPageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".SurveyPackage.FirstPageActivity" />
         <activity android:name=".SurveyPackage.SecoundPageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,7 +41,35 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".SurveyPackage.ThirdPageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SurveyPackage.EndPageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SignUpSurveyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SurveyPackage.ZeroPageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SignInUpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

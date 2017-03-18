@@ -100,7 +100,7 @@ public class ClientConnection {
                 JSONObject JSONanswer = sslConnector.getMessageFromServer();
                 Log.d ("TAG_CONN",JSONanswer.toString());
 
-                switch(JSONanswer.getString("message_type")){
+                switch(JSONanswer.getString("message_type")){//error
 
                     case ("LoginRequest"):
                         Log.d("TAG_LogReq",JSONanswer.getString("message_type"));

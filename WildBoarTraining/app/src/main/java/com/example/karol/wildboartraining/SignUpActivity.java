@@ -37,13 +37,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             String messageType = "RegisterNewClient";
             parameters = new HashMap<>();
 
-            final EditText loginEditText = (EditText)this.findViewById(R.id.login_up);
+            final EditText loginEditText = (EditText)this.findViewById(R.id.login_up_sur);
             addParameter(loginEditText,"login");
             final EditText passEditText = (EditText)this.findViewById(R.id.password_up);
             addParameter(passEditText,"password");
-            final EditText fNameEditText = (EditText)this.findViewById(R.id.first_name);
+            final EditText fNameEditText = (EditText)this.findViewById(R.id.first_name_sur);
             addParameter(fNameEditText,"name");
-            final EditText lNameEditText = (EditText)this.findViewById(R.id.last_name);
+            final EditText lNameEditText = (EditText)this.findViewById(R.id.last_name_sur);
             addParameter(lNameEditText,"lastname");
             final EditText emailEditText = (EditText)this.findViewById(R.id.email);
             addParameter(emailEditText,"EMAIL");
@@ -61,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             if (emailVerifyBox.isChecked()) verify = "EMAIL";
             parameters.put("verify_way",verify);
 
-            if ( parameters.size() == 7 ){
+            if ( parameters.size() == 7 ){//Ok ze zmianą na error
 
                 InputStream keyin = this.getResources().openRawResource(R.raw.testkeysore);
                 ClientConnection client = new ClientConnection(keyin,"RegisterNewClient",parameters);

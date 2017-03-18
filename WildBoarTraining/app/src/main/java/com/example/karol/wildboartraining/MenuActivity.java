@@ -31,49 +31,6 @@ public class MenuActivity extends AppCompatActivity implements OnClickListener{
         View optionButton = findViewById(R.id.option_button);
         optionButton.setOnClickListener(this);
 
-        if (!ClientConnection.IsLogged()) {
-
-            AlertDialog alertDialog = new AlertDialog.Builder(MenuActivity.this).create();
-            alertDialog.setTitle("Połączenie");
-            alertDialog.setMessage("Nie jesteś zalogowany z serwerem!");
-
-            //  Kod MAC urządzenia
-            //WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-            //WifiInfo info = manager.getConnectionInfo();
-            //final String macAddress = info.getMacAddress();
-
-            final String macAddress = "123";
-
-            //---------------------------------------PRZYCISK--ZALOGUJ------------------------------
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Logowanie", new DialogInterface.OnClickListener() {
-
-                //
-                //  Kliknołeś w Zaloguj, więc wyświeetla się alertdialog związany z logowaniem
-                //
-
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getBaseContext(),SignInActivity.class);
-                    startActivity(intent);
-
-                }
-
-            });
-            //---------------------PRYCISK--REJESTRUJ-----------------------------
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE,"Rejestracja",new DialogInterface.OnClickListener() {
-
-                //
-                //  Kliknołeś w Rejestracje, więc tworzymy alterDialog dla Rejestracji
-                //
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = new Intent(getBaseContext(),SignUpActivity.class);
-                    startActivity(intent);
-                }
-
-            });
-
-            alertDialog.show();
-        }
-
     }
 
     public void ClickExit(View v){
@@ -87,7 +44,7 @@ public class MenuActivity extends AppCompatActivity implements OnClickListener{
                 Log.d("TAG", "kliknoles stworz plan!!");
                 intent = new Intent(this,CreatePlanActivity.class);
                 startActivity(intent);
-                break;
+            break;
             case R.id.showPlan_lable:
                 intent = new Intent(this,ShowPlanActivity.class);
                 startActivity(intent);

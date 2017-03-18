@@ -21,5 +21,8 @@
     <string name="email_verify">Weryfickaja email</string>
     <string name="verify_code">Wprowadź kod weryfikacjyjny</string>
     <string name="log_in">Zaloguj</string>
+    <string name="go_next_hint">Aby przejść dalej przesuń ekran w prawo</string>
+    <string name="go_back_next_hint">Przesuń w lewo lub prawo ekran aby wrócić lub iść dalej</string>
+    <string name="remember_signin">Zaloguj automatycznie</string>
 
 </resources>

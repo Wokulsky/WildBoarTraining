@@ -35,6 +35,15 @@
         android:textColorHint="@color/white"
         android:gravity="center_vertical|center" />
 
+    <CheckBox
+        android:text="@string/remember_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remember_checkBox"
+        android:gravity="center_vertical|center|start"
+        android:layout_gravity="center_vertical|center_horizontal|center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse" />
+
     <Button
         android:text="@string/log_in"
         android:layout_width="203dp"

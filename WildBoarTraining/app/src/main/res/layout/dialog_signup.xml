@@ -14,7 +14,7 @@
         android:ems="10"
         android:layout_alignParentTop="true"
         android:layout_marginTop="123dp"
-        android:id="@+id/login_up"
+        android:id="@+id/login_up_sur"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:gravity="center_vertical|center"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:layout_below="@+id/login_up"
+        android:layout_below="@+id/login_up_sur"
         android:layout_centerHorizontal="true"
         android:id="@+id/password_up"
         android:gravity="center_vertical|center"
@@ -40,8 +40,8 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/last_name"
-        android:layout_below="@+id/first_name"
+        android:id="@+id/last_name_sur"
+        android:layout_below="@+id/first_name_sur"
         android:layout_alignParentEnd="true"
         android:hint="@string/last_name"
         android:gravity="center_vertical|center"
@@ -53,62 +53,13 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:layout_below="@+id/last_name"
+        android:layout_below="@+id/last_name_sur"
         android:layout_alignParentStart="true"
         android:id="@+id/email"
         android:hint="@string/email"
         android:gravity="center_vertical|center"
         android:textColorHint="@color/white"
         android:textColorLink="@android:color/holo_blue_dark" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType=""
-        android:ems="10"
-        android:layout_below="@+id/email"
-        android:layout_alignParentStart="true"
-        android:id="@+id/phone_number"
-        android:hint="@string/phone_number"
-        android:gravity="center_vertical|center"
-        android:textColorHint="@color/white"
-        android:textColorLink="@android:color/holo_blue_dark" />
-
-    <CheckBox
-        android:text="@string/sms_verify"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/VerifySmsBox"
-        android:layout_below="@+id/phone_number"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="38dp"
-        android:layout_width="150dp"
-        android:textColorLink="@android:color/holo_blue_dark" />
-
-    <CheckBox
-        android:text="@string/email_verify"
-        android:checked="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:id="@+id/VerifyEmailBox"
-        android:layout_alignBaseline="@+id/VerifySmsBox"
-        android:layout_alignBottom="@+id/VerifySmsBox"
-        android:layout_alignParentEnd="true"
-        android:textColorLink="@android:color/holo_blue_dark" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/first_name"
-        android:textColorHint="@color/white"
-        android:hint="@string/first_name"
-        android:gravity="center_vertical|center"
-        android:textColorLink="@android:color/holo_blue_dark"
-        android:layout_below="@+id/password_up"
-        android:layout_alignParentStart="true" />
 
     <Button
         android:text="@string/registry"
@@ -127,5 +78,53 @@
         android:layout_marginBottom="54dp"
         android:layout_above="@+id/password_up"
         android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/first_name_sur"
+        android:textColorHint="@color/white"
+        android:hint="@string/first_name"
+        android:gravity="center_vertical|center"
+        android:textColorLink="@android:color/holo_blue_dark"
+        android:layout_below="@+id/password_up"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType=""
+        android:ems="10"
+        android:id="@+id/phone_number"
+        android:hint="@string/phone_number"
+        android:gravity="center_vertical|center"
+        android:textColorHint="@color/white"
+        android:textColorLink="@android:color/holo_blue_dark"
+        android:layout_below="@+id/email"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:text="@string/sms_verify"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/VerifySmsBox"
+        android:layout_width="150dp"
+        android:textColorLink="@android:color/holo_blue_dark"
+        android:layout_below="@+id/phone_number"
+        android:layout_toStartOf="@+id/VerifyEmailBox"
+        android:layout_marginEnd="20dp" />
+
+    <CheckBox
+        android:text="@string/email_verify"
+        android:checked="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:id="@+id/VerifyEmailBox"
+        android:textColorLink="@android:color/holo_blue_dark"
+        android:layout_above="@+id/signUpButton"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

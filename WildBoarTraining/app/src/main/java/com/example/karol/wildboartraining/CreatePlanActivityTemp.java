@@ -194,7 +194,7 @@ public class CreatePlanActivityTemp extends AppCompatActivity implements View.On
                             String messageType = "RegisterNewClient";
                             HashMap<String,String> parameters = new HashMap<>();
 
-                            EditText editText = (EditText)alertDialogRegister.findViewById(R.id.login_up);
+                            EditText editText = (EditText)alertDialogRegister.findViewById(R.id.login_up_sur);
 
                             parameters.put("login", editText.getText().toString() );
 
@@ -202,11 +202,11 @@ public class CreatePlanActivityTemp extends AppCompatActivity implements View.On
 
                             parameters.put("password", editText.getText().toString() );
 
-                            editText = (EditText)alertDialogRegister.findViewById(R.id.first_name);
+                            editText = (EditText)alertDialogRegister.findViewById(R.id.first_name_sur);
 
                             parameters.put("name", editText.getText().toString() );
 
-                            editText = (EditText)alertDialogRegister.findViewById(R.id.last_name);
+                            editText = (EditText)alertDialogRegister.findViewById(R.id.last_name_sur);
 
                             parameters.put( "lastname",editText.getText().toString() );
 
