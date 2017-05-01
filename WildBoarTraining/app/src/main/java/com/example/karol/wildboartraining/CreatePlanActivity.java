@@ -18,7 +18,7 @@ import static java.security.AccessController.getContext;
 
 
 public class CreatePlanActivity extends AppCompatActivity implements View.OnClickListener {
-
+    //asa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("TAG", "tworzysz Plan!!");
